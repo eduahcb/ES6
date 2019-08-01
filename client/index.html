@@ -28,7 +28,7 @@
             <input id="valor" type="number" class="form-control"  min="0.01" step="0.01" value="0.0" required />
         </div>
         
-        <button class="btn btn-primary" type="submit">Incluir</button>
+        <button class="btn btn-primary" type="submit" onclick="negociacao.adiciona(event)">Incluir</button>
     </form>
     
     <div class="text-center">
@@ -59,5 +59,12 @@
         </tfoot>
     </table>
     
+    <script src="js/app/models/Negociacao.js"></script>
+    <script src="js/app/controllers/NegociacaoController.js"></script>
+    <script>
+        
+        let negociacao = new NegociacaoController();
+        
+    </script>
 </body>
 </html>
