@@ -28,14 +28,14 @@
             <input id="valor" type="number" class="form-control"  min="0.01" step="0.01" value="0.0" required />
         </div>
         
-        <button class="btn btn-primary" type="submit" onclick="negociacao.adiciona(event)">Incluir</button>
+        <button class="btn btn-primary" type="submit" onclick="negociacaoController .adiciona(event)">Incluir</button>
     </form>
     
     <div class="text-center">
         <button class="btn btn-primary text-center" type="button">
             Importar Negociações
         </button>
-        <button onclick="negociacao.apaga()" class="btn btn-primary text-center" type="button">
+        <button onclick="negociacaoController .apaga()" class="btn btn-primary text-center" type="button">
             Apagar
         </button>
     </div> 
@@ -54,7 +54,7 @@
     <script src="js/app/views/MensagemView.js"></script>
     <script>
         
-        let negociacao = new NegociacaoController();
+        let negociacaoController = new NegociacaoController();
         
     </script>
 </body>
