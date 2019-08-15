@@ -7,15 +7,25 @@ class NegociacaoController {
         this._intputQuatidade = $('#quantidade');
         this._inputValor = $('#valor');
         this._form = $('.form');
-        
-        this._listaNegociacoes = new ListaNegociacoes( (model) =>  this._negociacoesView.update(model.negociacoes));
-        
+
+        this._listaNegociacoes = ProxyFactory.create(
+            new ListaNegociacoes(),
+            model => this._negociacoesView.update(model.negociacoes),
+            'adiciona', 'esvazia'
+        );
+
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
         this._negociacoesView.update(this._listaNegociacoes.negociacoes);
 
-        this._mensagem = new Mensagem();
+        this._mensagem = ProxyFactory.create(
+            new Mensagem(),
+            model => this._mensagemView.update(model),
+            'texto'
+        );
+
+        console.log(this._mensagem.texto)
         this._mensagemView = new MensagemView($('#mensagemView'));
-        this._mensagemView.update(this._mensagem);
+        this._mensagemView.update(this._mensagem.texto);
     }
 
     adiciona(event) {
@@ -23,19 +33,16 @@ class NegociacaoController {
         event.preventDefault();
         this._listaNegociacoes.adiciona(this._criaNegociacao());
         this._limpaCampos();
-        //mostra mensagem
         this._mensagem.texto = 'Negociação adicionada com sucesso.';
-        this._mensagemView.update(this._mensagem);
     }
 
-    apaga () {
+    apaga() {
 
         this._listaNegociacoes.esvazia();
-        this._mensagem = "Negociações apagadas com sucesso.";
-        this._mensagemView.update(this._mensagem);
+        this._mensagem.texto = "Negociações apagadas com sucesso.";
     }
 
-    _criaNegociacao () {
+    _criaNegociacao() {
 
         return new Negociacao(
             DateHelper.textoParaData(this._inputData.value),
@@ -44,7 +51,7 @@ class NegociacaoController {
         );
     }
 
-    _limpaCampos () {
+    _limpaCampos() {
         this._form.reset();
         this._inputData.focus();
     }
