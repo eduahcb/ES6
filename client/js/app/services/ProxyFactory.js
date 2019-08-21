@@ -1,11 +1,13 @@
 class ProxyFactory {
 
-    static create(objeto, acao, ...props) {
+    static create(objeto, acao, props) {
 
         return new Proxy(objeto, {
-
+            
             get(target, prop, receiver) {
+                
                 if (props.includes(prop) && ProxyFactory._ehFuncao(target[prop])) {
+
                     return function () {
                         console.log(`${prop} foi interceptado`);
                         Reflect.apply(target[prop], target, arguments);
