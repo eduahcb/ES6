@@ -31,22 +31,17 @@ class NegociacaoController {
 
     importaNegociacoes() {
 
-        let xhr = new XMLHttpRequest;
+        let service = new NegociacaoService();
 
-        xhr.open('GET', 'negociacoes/semana');
+        service.obterNegociacoesDaSemana( (err, result) => {
 
-        xhr.onreadystatechange = () => {
-
-            if(xhr.readyState == 4) {
-
-                if(xhr.status == 200)
-                    console.log(JSON.parse(xhr.responseText));
-                else 
-                    console.log(JSON.parse(xhr.responseText));
+            if(err){
+                this._mensagem.texto = err;
             }
-        }
-
-        xhr.send();
+            
+            result.forEach( negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._mensagem.texto = 'Negociações da semana importadas com sucesso';
+        });
     }
 
     _criaNegociacao() {
