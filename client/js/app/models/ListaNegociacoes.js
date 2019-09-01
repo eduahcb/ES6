@@ -10,7 +10,7 @@ class ListaNegociacoes {
 
     get volumeTotal () {
 
-        return this._negociacoes.negociacoes.reduce( (acum, n) => acum + n.volume, 0.0);
+        return this._negociacoes.reduce( (acum, n) => acum + n.volume, 0.0);
     }
 
     adiciona (negociacao) {
