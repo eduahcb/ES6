@@ -8,6 +8,11 @@ class ListaNegociacoes {
         return [].concat(this._negociacoes);
     }
 
+    get volumeTotal () {
+
+        return this._negociacoes.negociacoes.reduce( (acum, n) => acum + n.volume, 0.0);
+    }
+
     adiciona (negociacao) {
         this._negociacoes.push(negociacao);
     }

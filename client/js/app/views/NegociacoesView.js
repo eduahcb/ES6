@@ -30,7 +30,7 @@ class NegociacoesView extends View {
                 `).join('')}
             </tbody>
                 <td colspan="3"></td>
-                <td>${model.negociacoes.reduce( (acum, n) => acum + n.volume, 0.0)}</td>
+                <td>${model.volumeTotal}</td>
             <tfoot>
             </tfoot>
         </table>
