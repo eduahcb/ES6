@@ -9,10 +9,11 @@ class NegociacaoController {
         this._form = $('.form');
 
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
-        this._listaNegociacoes = new Bind(new ListaNegociacoes(), this._negociacoesView, 'adiciona', 'esvazia');
+        this._listaNegociacoes = new Bind(new ListaNegociacoes(), this._negociacoesView, 'adiciona', 'esvazia', 'ordena', 'inverteOrdem');
 
         this._mensagemView = new MensagemView($('#mensagemView'));
         this._mensagem = new Bind(new Mensagem(), this._mensagemView, 'texto');
+        this._ordemAtual = '';
     }
 
     adiciona(event) {
@@ -40,6 +41,18 @@ class NegociacaoController {
                 this._mensagem.texto = 'Negociações do período importadas com sucesso';
             })
             .catch( erro => this._mensagem.texto = erro);
+    }
+
+    ordena (coluna) {
+
+        if(this._ordemAtual === coluna){
+            this._listaNegociacoes.inverteOrdem();
+        }
+        else{
+            this._listaNegociacoes.ordena( (a, b) => a[coluna] - b[coluna]);
+        }
+
+        this._ordemAtual = coluna;
     }
 
     _criaNegociacao() {
