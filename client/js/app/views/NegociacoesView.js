@@ -21,10 +21,10 @@ class NegociacoesView extends View {
                 ${model.negociacoes.map( n => `
 
                     <tr>
-                        <td>${DateHelper.dataParaTexto(n.data)}</td>
-                        <td>${n.quantidade}</td>
-                        <td>${n.valor}</td>
-                        <td>${n.volume}</td>
+                        <td onclick="negociacaoController.ordena('data')" >${DateHelper.dataParaTexto(n.data)}</td>
+                        <td onclick="negociacaoController.ordena('quantidade')">${n.quantidade}</td>
+                        <td onclick="negociacaoController.ordena('valor')">${n.valor}</td>
+                        <td onclick="negociacaoController.ordena('volume')">${n.volume}</td>
                     <tr>
                 
                 `).join('')}
