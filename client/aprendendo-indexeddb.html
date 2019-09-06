@@ -8,24 +8,58 @@
 </head>
 <body>
     
+    <script src="./js/app/models/Negociacao.js"></script>
     <script>
         
-        var openRequest = window.indexedDB.open('aluraframe', 1);
+        var connection;
+
+        var openRequest = window.indexedDB.open('aluraframe', 3);
 
         openRequest.onupgradeneeded = (e) => {
 
             console.log('cria ou altera um banco já existente');
+
+            let minhaConnection = e.target.result;
+
+            if(minhaConnection.objectStoreNames.contains('Negociacoes')) {
+                minhaConnection.deleteObjectStore('Negociacoes');
+            }
+
+            minhaConnection.createObjectStore('Negociacoes', {autoIncrement : true});
         };
 
         openRequest.onsuccess = (e)  => {
 
             console.log('conexão obtida com sucesso');
+
+            connection = e.target.result;
         };
 
         openRequest.onerror = (e) => {
 
             console.log(e.target.error);
         };
+
+        function adiciona() {
+
+            let transaction = connection.transaction(['Negociacoes'], 'readwrite');
+
+            let store = transaction.objectStore('Negociacoes');
+
+            let negociacao = new Negociacao(new Date(), 1, 200); 
+
+            console.log(negociacao);
+            
+            let request = store.add(negociacao);
+
+            request.onsuccess = e => {
+                console.log('Negociação incluida com sucesso');
+            }
+
+            request.onerror = e => {    
+                console.log('Não foi possível incluir a negociação');
+            }
+        }
 
     </script>
 </body>
