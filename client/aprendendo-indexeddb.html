@@ -49,7 +49,7 @@
             let negociacao = new Negociacao(new Date(), 1, 200); 
 
             console.log(negociacao);
-            
+
             let request = store.add(negociacao);
 
             request.onsuccess = e => {
@@ -58,6 +58,38 @@
 
             request.onerror = e => {    
                 console.log('Não foi possível incluir a negociação');
+            }
+        }
+
+        function listaTodos () {
+
+            let transaction = connection.transaction(['Negociacoes'], 'readwrite');
+
+            let store = transaction.objectStore('Negociacoes');
+
+            let cursor = store.openCursor();
+
+            let negociacoes = [];
+
+            cursor.onsuccess =  e => {
+                
+                let atual = e.target.result;
+
+                if(atual){
+
+                    let dado = atual.value;
+
+                    negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
+
+                    atual.continue();
+
+                }else{
+                    console.log(negociacoes);
+                }
+            }
+
+            cursor.onerror = e => {
+                console.log(e.target.error.name);
             }
         }
 
