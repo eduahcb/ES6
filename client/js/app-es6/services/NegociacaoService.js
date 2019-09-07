@@ -1,4 +1,8 @@
-class NegociacaoService {
+import {ConnectionFactory} from './ConnectionFactory';
+import {Negociacao} from '../models/Negociacao';
+import {HttpService} from './HttpService';
+
+export class NegociacaoService {
 
     constructor() {
         this._service = new HttpService();
@@ -79,7 +83,7 @@ class NegociacaoService {
         .getConnection()
         .then( connection => new NegociacaoDao(connection))
         .then( dao => dao.listaTodos())
-        .catch( erro => {
+        .catch( () => {
             throw new Error('Não foi possível obter as negociações');
         });
 
