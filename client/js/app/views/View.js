@@ -1,14 +1,32 @@
-class View {
+"use strict";
 
-    constructor(elemento) {
-        this._elemento = elemento;
-    }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    template() {
-        throw new Error('O método template deve ser implementado');
-    }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    update(model) {
-        this._elemento.innerHTML = this.template(model);
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var View =
+/*#__PURE__*/
+function () {
+  function View(elemento) {
+    _classCallCheck(this, View);
+
+    this._elemento = elemento;
+  }
+
+  _createClass(View, [{
+    key: "template",
+    value: function template() {
+      throw new Error('O método template deve ser implementado');
     }
-}
+  }, {
+    key: "update",
+    value: function update(model) {
+      this._elemento.innerHTML = this.template(model);
+    }
+  }]);
+
+  return View;
+}();
+//# sourceMappingURL=View.js.map
