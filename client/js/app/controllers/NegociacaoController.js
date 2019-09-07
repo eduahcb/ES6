@@ -15,18 +15,22 @@ class NegociacaoController {
         this._mensagem = new Bind(new Mensagem(), this._mensagemView, 'texto');
         this._ordemAtual = '';
 
+        this._negociacoesService = new NegociacaoService();
         this._init();
+
     }
 
     _init(){
 
-        ConnectionFactory
-            .getConnection()
-            .then( connection => new NegociacaoDao(connection))
-            .then( dao => dao.listaTodos())
-            .then( negociacoes => negociacoes.forEach(  negociacao => this._listaNegociacoes.adiciona(negociacao)))
-            .catch( erro => this._mensagem.texto = erro);
-
+            this._negociacoesService
+            .lista()
+            .then( negociacoes => 
+                    negociacoes.forEach( negociacao =>
+                        this._listaNegociacoes.adiciona(negociacao))
+            )
+            .catch( erro => {
+                this._mensagem.texto = erro;
+            });
 
         setInterval( () => {
 
@@ -42,33 +46,30 @@ class NegociacaoController {
 
         let negociacao = this._criaNegociacao();
 
-        new NegociacaoService()
+        nthis._negociacoesService
             .cadastra(negociacao)
             .then( mensagem => {
                 this._listaNegociacoes.adiciona(negociacao);
                 this._mensagem.texto = mensagem;
             })
             .catch( erro => this._mensagem.texto = erro);
-
     }
 
     apaga() {
 
-        ConnectionFactory
-            .getConnection()
-            .then( connection => new NegociacaoDao(connection))
-            .then( dao => dao.apagaTodos())
+        this._negociacoesService
+            .apaga()
             .then( mensagem => {
                 this._mensagem.texto = mensagem;
                 this._listaNegociacoes.esvazia();  
-            });
+            })
+            .catch(  erro => this._mensagem.texto = erro);
     }
 
     importaNegociacoes() {
 
-        let service = new NegociacaoService();
-
-        service.obterNegociacoes()
+        this._negociacoesService
+            .obterNegociacoes()
             .then( negociacoes => 
                 negociacoes.filter(negociacao => 
                     !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
