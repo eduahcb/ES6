@@ -1,31 +1,111 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Dissecando uma promise</title>
 </head>
+
 <body>
     <script>
+        
+        /* et ok = true;
 
-        let ok = true;
+                let promise = new Promise((resolve, reject) => {
+                    
+                    setTimeout(() => { 
 
-        let promise = new Promise((resolve, reject) => {
-            
-            setTimeout(() => { 
+                        if(ok)
+                            resolve('PROMISE CONCLUÍDA');
+                        else
+                            reject('HOUVE PROBLEMAS');
 
-                if(ok)
-                    resolve('PROMISE CONCLUÍDA');
-                else
-                    reject('HOUVE PROBLEMAS');
+                    }, 5000);
+                });
 
-            }, 5000);
-        });
+                promise
+                .then(resultado => console.log(resultado))
+                .catch( erro => console.log(erro));
 
-        promise
-        .then(resultado => console.log(resultado))
-        .catch( erro => console.log(erro));
+                console.log('FIM'); */
+        
 
-        console.log('FIM');
+
+        function a(falhar) {
+
+            return new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+
+                    if (falhar) {
+
+                        reject('PROMISE A FALHOU');
+                    } else {
+
+                        console.log('PROMISE A RESOLVIDA');
+                        resolve('DADO A');
+                    }
+
+                }, 2000);
+            });
+        }
+
+        function b(falhar) {
+
+            return new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+
+                    if (falhar) {
+
+                        reject('PROMISE B FALHOU');
+                    } else {
+
+                        console.log('PROMISE B RESOLVIDA')
+                        resolve('DADO B');
+                    }
+
+                }, 1000);
+            });
+        }
+
+        function c(falhar) {
+
+            return new Promise((resolve, reject) => {
+
+                setTimeout(() => {
+
+                    if (falhar) {
+
+                        reject('PROMISE C FALHOU');
+                    } else {
+
+                        console.log('PROMISE C RESOLVIDA')
+                        resolve('DADO C');
+                    }
+
+                }, 500);
+            });
+        }
+
+        a(false)
+            .then(dado => {
+                console.log(dado);
+                // O RETORNO DA PROMISE B ESTARÁ DISPONÍVEL NO PRÓXIMO THEN
+                return b(); 
+            })
+            .then(dado => {
+                console.log(dado);
+
+                /* FORÇANDO A REJEIÇÃO DA PROMISE. TEM QUE IR DIRETO PARA O CATCH. 
+                SE NÃO TIVESSE REJEITADO, O RETORNO DE C ESTARIA DISPONÍVEL NO PRÓXIMO THEN */
+                return c();  
+            })
+            .then(dado => {
+                console.log(dado);
+            })
+            .catch(erro => console.log(erro));
     </script>
 </body>
+
 </html>
