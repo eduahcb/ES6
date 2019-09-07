@@ -22,4 +22,10 @@ class Negociacao {
     get volume () {
         return  this._quantidade * this._valor;
     }
+
+    isEquals(outraNegociacao){
+        
+        return this._data.getTime() == outraNegociacao.data.getTime()
+        && this._valor == outraNegociacao.valor;
+    }
 }
