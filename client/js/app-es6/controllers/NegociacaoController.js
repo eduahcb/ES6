@@ -4,10 +4,10 @@ import {ListaNegociacoes} from '../models/ListaNegociacoes';
 import {MensagemView} from '../views/MensagemView';
 import {Mensagem} from '../models/Mensagem';
 import {NegociacaoService} from '../services/NegociacaoService';
-import {Negociacao} from '../models/Mensagem';
-import {DateHelper} from '../helpers/DateHelper';
+import {Negociacao} from '../models/Negociacao';
+import {DateHelper } from '../helpers/DateHelper';
 
-export class NegociacaoController {
+class NegociacaoController {
 
     constructor() {
         let $ = document.querySelector.bind(document);
@@ -112,3 +112,7 @@ export class NegociacaoController {
         this._inputData.focus();
     }
 }
+
+let negociacaoController = new NegociacaoController();
+
+export const currentInstance = () => negociacaoController;

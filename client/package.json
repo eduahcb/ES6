@@ -4,12 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-      "build": "babel js/app-es6 -d js/app --source-maps",
-      "dev" : "babel js/app-es6 -d js/app --source-maps --watch"
+    "build": "babel js/app-es6 -d js/app --source-maps",
+    "dev": "babel js/app-es6 -d js/app --source-maps --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0"
+    "@babel/preset-env": "^7.6.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.9.0"
+  },
+  "dependencies": {
+    "systemjs": "0.19.31"
   }
 }

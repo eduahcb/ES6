@@ -1,9 +1,18 @@
 import { View } from './View';
+import {DateHelper} from '../helpers/DateHelper';
+import {currentInstance} from '../controllers/NegociacaoController';
 
 export class NegociacoesView extends View {
 
     constructor(elemento){
         super(elemento);
+
+        elemento.addEventListener('click', (e) => {
+
+            if(e.target.nodeName == 'TH'){
+                currentInstance().ordena(e.target.textContent.toLowerCase());
+            }
+        });
     }
 
     template(model) {
@@ -23,10 +32,10 @@ export class NegociacoesView extends View {
                 ${model.negociacoes.map( n => `
 
                     <tr>
-                        <td onclick="negociacaoController.ordena('data')" >${DateHelper.dataParaTexto(n.data)}</td>
-                        <td onclick="negociacaoController.ordena('quantidade')">${n.quantidade}</td>
-                        <td onclick="negociacaoController.ordena('valor')">${n.valor}</td>
-                        <td onclick="negociacaoController.ordena('volume')">${n.volume}</td>
+                        <td>${DateHelper.dataParaTexto(n.data)}</td>
+                        <td>${n.quantidade}</td>
+                        <td>${n.valor}</td>
+                        <td>${n.volume}</td>
                     <tr>
                 
                 `).join('')}
